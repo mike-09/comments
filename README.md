@@ -1,2 +1,2 @@
 # comments
-comments for products
+Ещё не придумал описание проекта )

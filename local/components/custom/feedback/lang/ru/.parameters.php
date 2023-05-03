@@ -1,0 +1,20 @@
+<?php
+$MESS["MAIN_IBLOCK_SUBSCRIBE"] = "Тип Highload блокa: Отзывы";
+$MESS['MAIN_IBLOCK_MODULE_NOT_INSTALLED'] = 'Модуль "Инфоблоки" не установлен';
+$MESS['MAIN_IBLOCK_PARAMETERS_SORT'] = 'Индекс сортировки';
+$MESS["T_IBLOCK_DESC_ASC"] = "По возрастанию";
+$MESS["T_IBLOCK_DESC_DESC"] = "По убыванию";
+$MESS["T_IBLOCK_DESC_FID"] = "ID";
+$MESS["T_IBLOCK_DESC_FNAME"] = "Название";
+$MESS["T_IBLOCK_DESC_FACT"] = "Дата начала активности";
+$MESS["T_IBLOCK_DESC_FSORT"] = "Сортировка";
+$MESS['MAIN_IBLOCK_PARAMETERS_SORT_FIELD1'] = 'Поле для первой сортировки новостей';
+$MESS['MAIN_IBLOCK_PARAMETERS_SORT_DIRECTION1'] = 'Направление для первой сортировки новостей';
+$MESS['MAIN_IBLOCK_PARAMETERS_SORT_FIELD2'] = 'Поле для второй сортировки новостей';
+$MESS['MAIN_IBLOCK_PARAMETERS_SORT_DIRECTION2'] = 'Направление для второй сортировки новостей';
+$MESS['MAIN_IBLOCK_PARAMETERS_TITLE'] = 'Заголовок';
+$MESS["ELEMENTS_COUNT"] = "Количество новостей на странице";
+$MESS["T_IBLOCK_PROPERTY"] = "Свойства";
+$MESS["IBLOCK_FIELD"] = "Поля";
+$MESS["T_IBLOCK_FILTER"] = "Фильтр";
+$MESS["IBLOCK_CACHE_FILTER"] = "Кешировать при установленном фильтре";
