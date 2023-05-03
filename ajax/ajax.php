@@ -6,20 +6,21 @@ use Bitrix\Highloadblock as HL;
 use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\Entity;
 use Bitrix\Main\Localization\Loc;
+$getQuery = htmlspecialcharsEx($_POST);
 
-if(!empty($_POST)) {
-    $hlblock = HL\HighloadBlockTable::getById($_POST['IBLOCK_ID'])->fetch(); //где ID - id highloadblock блока из которого будем получать данные
+if(!empty($getQuery)) {
+    $hlblock = HL\HighloadBlockTable::getById($getQuery['IBLOCK_ID'])->fetch(); //где ID - id highloadblock блока из которого будем получать данные
     $entity = HL\HighloadBlockTable::compileEntity($hlblock); 
     // Add new comment to product 
-    if ($_POST['type'] === 'ADD_COMMENT') {
+    if ($getQuery['type'] === 'ADD_COMMENT') {
         $addCommentClass = $entity->getDataClass(); 
         // Values of new element  
         $newComment = [
             'UF_USER_ID' => $USER->GetID(),
-            'UF_USER_NAME' => $_POST['user_name'],
-            'UF_MESSAGE' => $_POST['message'],
-            'UF_RATING' => $_POST['rating'],
-            'UF_PRODUCT_ID' => $_POST['PRODUCT_ID']
+            'UF_USER_NAME' => $getQuery['user_name'],
+            'UF_MESSAGE' => $getQuery['message'],
+            'UF_RATING' => $getQuery['rating'],
+            'UF_PRODUCT_ID' => $getQuery['PRODUCT_ID']
         ];
 
         // adding new element to HighLoad блок
@@ -34,7 +35,7 @@ if(!empty($_POST)) {
     } 
 
     // Add like and dislike to comment
-    if ($_POST['LIKE'] === 'LIKE' || $_POST['DISLIKE'] === 'DISLIKE') {
+    if ($getQuery['LIKE'] === 'LIKE' || $getQuery['DISLIKE'] === 'DISLIKE') {
         $hasElement = false;
         $hasElementId = null;
         $arValues = array();
@@ -42,10 +43,10 @@ if(!empty($_POST)) {
         $isLike = false;
         $isDisLike = false;
 
-        if ($_POST['LIKE'] === 'LIKE') {
+        if ($getQuery['LIKE'] === 'LIKE') {
             $arSelect = array("UF_LIKE", "ID");
             $isLike = true;
-        } else if ($_POST['DISLIKE'] === 'DISLIKE') {
+        } else if ($getQuery['DISLIKE'] === 'DISLIKE') {
             $arSelect = array("UF_DISLIKE", "ID");
             $isDisLike = true;
         }
@@ -53,7 +54,7 @@ if(!empty($_POST)) {
         $addLikeClass = $entity->getDataClass(); 
         $arLikeProps = $addLikeClass::getList(array(
             "select" => $arSelect,
-            "filter" => array("ID" => $_POST['ELEMENT_ID']) //Фильтрация выборки
+            "filter" => array("ID" => $getQuery['ELEMENT_ID']) //Фильтрация выборки
         ))->fetch();
 
         if ($isLike === true && $isDisLike === false) {
@@ -125,9 +126,9 @@ if(!empty($_POST)) {
     }
 
     // Delete comment 
-    if ($_POST['delete'] === 'delete-comment' && !empty($_POST['id'])) {
+    if ($getQuery['delete'] === 'delete-comment' && !empty($getQuery['id'])) {
         $deleteElementClass = $entity->getDataClass(); 
-        $result = $deleteElementClass::Delete($_POST['id']);
+        $result = $deleteElementClass::Delete($getQuery['id']);
 
         if ($result->isSuccess()) {
             echo 'Элемент успешно удалено';
@@ -137,7 +138,7 @@ if(!empty($_POST)) {
     }
 
     // Add complaint 
-    if ($_POST['type'] === 'COMPLAINT') {
+    if ($getQuery['type'] === 'COMPLAINT') {
         $arResultClasss = $entity->getDataClass(); 
         $arCompaintValue = [];        
         $arSelect = array();
@@ -145,11 +146,11 @@ if(!empty($_POST)) {
         $arSelect = array("UF_COMPLAINT", "ID");
         $arProperties = $arResultClasss::getList(array(
             "select" => $arSelect,
-            "filter" => array("ID" => $_POST['ID']) //Фильтрация выборки
+            "filter" => array("ID" => $getQuery['ID']) //Фильтрация выборки
         ))->fetch();
 
         if(!empty($arProperties)) {
-            $arProperties['UF_COMPLAINT'][] = $_POST['respond'];
+            $arProperties['UF_COMPLAINT'][] = $getQuery['respond'];
             $arCompaintValue = array('UF_COMPLAINT' => $arProperties['UF_COMPLAINT']);
             $result = $arResultClasss::update($arProperties['ID'], $arCompaintValue);
 
